@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib2
 from urllib2 import urlopen
+import time
 # from urllib2 import requests
 import random
 
@@ -38,6 +39,10 @@ def getGenre(inputUrl):
 def loadApps(inputFile):
     listApps = []
     apps = open(inputFile, 'r')
+    """
+    App Name -  chrome dev editor
+    Search query - chrome%20dev%20editor
+    """
     for app in apps:
         if len(app.split()) > 1:
             app = app.replace(' ','%20')
@@ -45,12 +50,6 @@ def loadApps(inputFile):
             app
         listApps.append(app)
     return listApps
-
-
-"""
-App Name -  chrome dev editor
-Search query - chrome%20dev%20editor
-"""
 
 # appName = "slack"
 searchUrl = "https://play.google.com/store/search?q="
@@ -61,12 +60,14 @@ genreList = open('app_genre_list.csv', 'w')
 
 for appName in appsList:
     appHref = getHref(searchUrl + appName)
-    appGenre = getGenre(appUrl + appHref)
-    genreOut = appName + ", " + appGenre
+    time.sleep(5)
+    if len(appHref) > 0:
+        appGenre = getGenre(appUrl + appHref)
+        time.sleep(5)
+    else:
+        appGenre = "NULL"
+        time.sleep(5)
+    genreOut = appName.strip('\n') + ", " + appGenre
     genreList.write(genreOut)
-# print appsList
-# print type(appsList)
-
-# print appName, appGenre
 
 genreList.close()
