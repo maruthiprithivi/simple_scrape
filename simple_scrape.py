@@ -64,9 +64,6 @@ for appName in appsList:
     appGenre = getGenre(appUrl + appHref)
     genreOut = appName + ", " + appGenre
     genreList.write(genreOut)
-# print appsList
-# print type(appsList)
 
-# print appName, appGenre
 
 genreList.close()
